@@ -1,22 +1,26 @@
 # This uses LangGraph to build an AI that thinks like a forensic analyst.
 from langraph.graph import StateGraph, END 
-import os 
+from src.utils import logger 
 
-def check_ip_blacklist(state):
-    #Simulate a Rag/API check on the IP
-    print("Agent investigating IP address...")
-    return {"risk_level": "High", "reason": "IP found in recent data breach"}
+def investigator_node(state):
+    """AI Agent checks if the transaction matches known fraud patterns."""
+    logger.info("🔍 Agent: Investigating transaction history...")
+    # Simulation: In a real app, you'd call a Vector DB here
+    state['investigation_done'] = True
+    return state
 
-def generate_report(state):
-    # Logic to summarize findings
-    return {"final_decision": "REJECT", "summary": "GNN flagged and Agent confirmed risk."}
+def reporter_node(state):
+    """AI Agent writes the final report."""
+    logger.info("📝 Agent: Generating SAR (Suspicious Activity Report)...")
+    state['report'] = "High risk detected: Wallet associated with known mixer"
+    return state
 
-# Build the Graph
-workflow = StateGraph(dict)
-workflow.add_node("investigator", check_ip_blacklist)
-workflow.add_node("reporter", generate_report)
-workflow.set_entry_point("investigator")
-workflow.add_edge("investigator", "reporter")
-workflow.add_edge("reporter", End)
+# Define the workflow
+builder = StateGraph(dict)
+builder.add_node("investigator", investigator_node)
+builder.add_node("reporter", reporter_node)
+builder.set_entry_point("investigator")
+builder.add_edge("investigator", "reporter")
+builder.add_edge("reporter", End)
 
-fraud_agent = workflow.compile()
+fraud_agent = builder.compile()

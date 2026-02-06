@@ -17,7 +17,7 @@ def fetch_live_market_data():
     headers = {"x-cg-demo-api-key": keys["COINGECKO_KEY"]}
 
     try: 
-        response =requests.get(url, params=params, headers=headers)
+        response = requests.get(url, params=params, headers=headers)
         response.raise_for_status()
         data = response.json()
 

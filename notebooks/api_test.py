@@ -15,7 +15,7 @@ def test_connections():
     print(f"✅ CoinGecko: {'Online' if cg_res.status_code == 200 else 'Failed'}")
 
     # 2. Test IPQualityScore
-    ip_key = os.get("IP_QUALITY_KEY")
+    ip_key = os.getenv("IP_QUALITY_KEY")
     ip_url = f"https://www.ipqualityscore.com/api/json/ip/{ip_key}/8.8.8.8"
     ip_res = requests.get(ip_url)
     print(f"✅ IPQualityScore: {'Online' if ip_res.status_code == 200 else 'Failed'}")

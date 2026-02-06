@@ -12,8 +12,7 @@ def get_env_keys():
     return {
         "COINGECKO_KEY": os.getenv("COINGECKO_API_KEY"),
         "IP_QUALITY_KEY": os.getenv("IP_QUALITY_KEY"),
-        "OPENAI_KEY"": os.getenv("OPENAI_API_KEY")       
-        
+        "OPENAI_KEY": os.getenv("OPENAI_API_KEY")
     }
     return keys
 

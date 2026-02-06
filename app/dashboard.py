@@ -1,18 +1,16 @@
 import streamlit as st 
-import pandas as pd 
+from src.ingestor import fetch_live_market_data
 
 st.set_page_config(page_title="Sentinel Fraud 2026", layout="wide")
-st.title("🛡️ Sentinel-Graph AI: Real-Time Fraud Monitor")
 
-st.sidebar.header("System Status")
-st.sidebar.success("GNN Model: Active")
-st.sidebar.info("Agentic Layer: Listening")
+st.title("🛡️ Sentinel-Graph AI")
+st.write("Real-time Graph-Based Detection")
 
-# Placeholder for real-time table
-df = pd.DataFrame([
-    {"Time": "21:05", "User": "0x45f", "Amount": "$12,000", "Risk": "92%", "Status": "Investigating"}
-])
-st.table(df)
-
-st.write("### Graph Network Visualization")
-st.info("Interactive Graph Loading...")
+if st.button('Fetch Live Data'):
+    with st.spinner('Ingesting...'):
+        df = fetch_live_market_data()
+        if df is not None:
+            st.success("Data Ingested")
+            st.dataframe(df[['name', 'current_price', 'price_change_percentage_24h']])
+        else:
+            st.error("Check your API keys.")

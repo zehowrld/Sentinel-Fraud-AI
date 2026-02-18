@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-class Dataprocessor:
+class DataProcessor:
     def __init__(self):
         self.scaler = StandardScaler()
     

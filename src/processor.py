@@ -26,5 +26,5 @@ class DataProcessor:
     
     def scale_features(self, df, features):
         # Normalize so large numbers don't confuse the AI
-        df[features] = self.scaler.fit_transform(df['features'])
+        df[features] = self.scaler.fit_transform(df[features])
         return df

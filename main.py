@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from src.ingestor import fetch_live_market_data
 from src.processor import DataProcessor
-from src.gnn_model import train_gnn
+from src.gnn_model import run_gnn_pipeline
 import pandas as pd
 
 def main():
@@ -19,7 +19,7 @@ def main():
     df = proc.scale_features(df, ['log_volume', 'log_mcap', 'current_price', 'market_cap_rank'])
 
     # Train AI
-    graph_data, preds = train_gnn(df)
+    graph_data, preds = run_gnn_pipeline(df)
     df['ai_prediction'] = preds.numpy()
 
     # Save final results

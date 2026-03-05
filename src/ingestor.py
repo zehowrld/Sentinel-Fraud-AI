@@ -9,14 +9,19 @@ def fetch_live_market_data():
     url = "https://api.coingecko.com/api/v3/coins/markets"
     params = {
         "vs_currency": "usd",
-        "order": "market_cap_desc",
-        "per_page": 10,
+        "order": "volume_desc",
+        "per_page": 250,
         "page": 1,
-        "sparkline": False
+        "sparkline": False,
+        "price_change_percentage": "1h,24h,7d"
     }
-    headers = {"x-cg-demo-api-key": keys["COINGECKO_KEY"]}
+    headers = {
+        "x-cg-demo-api-key": keys["COINGECKO_KEY"],
+        "accept": "application/json"               
+    }
 
     try: 
+        logger.info("📡 Ingestor: Requesting 250 raw transactions from CoinGecko...")
         response = requests.get(url, params=params, headers=headers)
         response.raise_for_status()
         data = response.json()
@@ -32,4 +37,6 @@ def fetch_live_market_data():
 if __name__ == "__main__":
     # Test the ingestion
     data = fetch_live_market_data()
-    print(data.head())
+    if data is not None:
+        print(f"Sample Data (First 5 of {len(data)}):")
+        print(data[['id', 'symbol', 'current_price']].head())

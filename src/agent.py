@@ -19,7 +19,7 @@ rate_limiter = InMemoryRateLimiter(
 )
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash", 
+    model="gemini-2.5-flash",  # "gemini-2.5-flash-lite"
     google_api_key=os.getenv("GOOGLE_API_KEY"),
     temperature=0.7,
     max_retries=5,
@@ -47,6 +47,7 @@ def investigator_node(state: AgentState):
 
 def reporter_node(state: AgentState):
     """Uses Gemini to generate a data-backed forensic narrative."""
+    time.sleep(4)
     logger.info(f"📝 Sentinel Agent: Writing Forensic Report for {state['symbol']}...")
     
    # Extracting features you engineered in processor.py
@@ -118,7 +119,7 @@ builder.add_edge("reporter", END)
 fraud_agent = builder.compile()
 
 # ADD CACHING
-@st.cache_data(ttl="24h", show_spinner=False)
+@st.cache_data(ttl=86400, show_spinner=False)
 # Helper function for your Dashboard/Main to call
 def run_agent_analysis(data_dict):
     """

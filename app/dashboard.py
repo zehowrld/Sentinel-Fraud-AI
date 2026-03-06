@@ -6,9 +6,6 @@ import pandas as pd
 import streamlit.components.v1 as components
 import warnings
 
-# Silence Pydantic warnings
-
-
 # Path setup 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(BASE_DIR)
@@ -121,7 +118,7 @@ if os.path.exists(processed_path):
     c1.metric("Market Sample", f"{len(df)} Tokens", delta="LIVE")
     c2.metric("GNN Alerts", f"{total_suspicious}",delta="CRITICAL", delta_color="inverse")
     c3.metric("Avg Market Risk", f"{avg_risk:.1f}%")
-    c4.metric("System Engine", "Gemini 2.5 flash")
+    c4.metric("System Engine", "gemini")
 
     st.divider()
 
@@ -175,9 +172,8 @@ if os.path.exists(processed_path):
                         except Exception as e:
                             # If the AI fails, show a manual forensic summary instead of a crash
                             st.warning("⚠️ AI Quota reached.")
-                            st.write(f"**Risk Severity:** {risk_pct*100:.1f}%")
-                            
-                time.sleep(2)
+                                                  
+                
         else:
             st.success("✅ No critical threats identified.")
     

@@ -6,6 +6,33 @@ import pandas as pd
 import streamlit.components.v1 as components
 import warnings
 
+st.sidebar.title("🔑 System Configuration")
+
+# Upload .env if keys are expired
+uploaded_env = st.sidebar.file_uploader("Upload .env if keys expire", type=["env", "txt"])
+
+if uploaded_env:
+    # Read the file and inject keys into os.environ
+    for line in uploaded_env.read().decode("utf-8").splitlines():
+        if "=" in line and not line.startswith("#"):
+            key, value = line.split("=", 1)
+            os.environ[key.strip()] = value.strip()
+    st.sidebar.success("✅ Forensic Keys Updated!")
+
+# Centralized Key Loader Function
+def get_key(name):
+    # Order of Priority: Manual Upload/Env Variable -> Streamlit Cloud Secrets
+    return os.getenv(name) or st.secrets.get(name)
+
+# Inject keys into the environment so src/agent.py can find them automatically
+os.environ["GOOGLE_API_KEY"] = get_key("GOOGLE_API_KEY") or ""
+os.environ["COINGECKO_API_KEY"] = get_key("COINGECKO_API_KEY") or ""
+os.environ["IPQS_API_KEY"] = get_key("IPQS_API_KEY") or ""
+
+# 4. Global Offline Check
+if not os.environ.get("GOOGLE_API_KEY"):
+    st.sidebar.error("🛡️ Sentinel Analyst Offline. Please provide an API key.")
+
 # Path setup 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(BASE_DIR)

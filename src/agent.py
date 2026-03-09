@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 load_dotenv(override=True)
 
 # st.secrets is for Cloud; os.getenv is for Local .env
-api_key = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY")
+api_key = st.secrets.get("GOOGLE_KEY") or os.getenv("GOOGLE_KEY")
 
 # 2. Add a safety check so the app doesn't crash with a cryptic error
 if not api_key:
@@ -28,7 +28,7 @@ rate_limiter = InMemoryRateLimiter(
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",  # "gemini-2.5-flash-lite"
-    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    google_api_key=os.getenv("GOOGLE_KEY"),
     temperature=0.7,
     max_retries=5,
     rate_limiter=rate_limiter

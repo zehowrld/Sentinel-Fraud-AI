@@ -37,7 +37,7 @@ def test_connections():
             print(f"IPQualityScore API: ❌ FAILED - {e}")
 
     # 3. Test Gemini
-    google_key = os.getenv("GOOGLE_API_KEY")
+    google_key = os.getenv("GOOGLE_KEY")
     if not google_key:
         print("Gemini AI Engine: ⚠️ KEY MISSING IN .ENV")
     else:

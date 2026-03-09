@@ -11,9 +11,9 @@ def get_env_keys():
     load_dotenv()
 
     keys = {
-        "COINGECKO_KEY": os.getenv("COINGECKO_API_KEY"),
+        "COINGECKO_KEY": os.getenv("COINGECKO_KEY"),
         "IP_QUALITY_KEY": os.getenv("IP_QUALITY_KEY"),
-        "GOOGLE_KEY": os.getenv("GOOGLE_API_KEY")
+        "GOOGLE_KEY": os.getenv("GOOGLE_KEY")
     }
     # Log if a key is missing so you don't crash later
     missing_keys = [k for k, v in keys.items() if not v]

@@ -2,10 +2,15 @@ import requests
 import pandas as pd 
 from src.utils import get_env_keys, logger
 
-keys = get_env_keys()
+
 
 def fetch_live_market_data():
     """Fetches live crypto market data as a proxy for financial transactions."""
+    keys = get_env_keys()
+    if not keys.get("COINGECKO_KEY"):
+        logger.error("❌ Ingestion failed: COINGECKO_KEY is missing from environment.")
+        return None
+    
     url = "https://api.coingecko.com/api/v3/coins/markets"
     params = {
         "vs_currency": "usd",

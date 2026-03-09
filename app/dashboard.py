@@ -6,6 +6,13 @@ import pandas as pd
 import streamlit.components.v1 as components
 import warnings
 
+# 1. Page Configuration
+st.set_page_config(
+    page_title="Sentinel-Graph AI",
+    page_icon="🛡️",
+    layout="wide"  
+)
+
 st.sidebar.title("🔑 System Configuration")
 
 # Upload .env if keys are expired
@@ -21,16 +28,20 @@ if uploaded_env:
 
 # Centralized Key Loader Function
 def get_key(name):
+    try:
+
     # Order of Priority: Manual Upload/Env Variable -> Streamlit Cloud Secrets
-    return os.getenv(name) or st.secrets.get(name)
+        return os.getenv(name) or st.secrets.get(name)
+    except:
+        return os.getenv(name)
 
 # Inject keys into the environment so src/agent.py can find them automatically
-os.environ["GOOGLE_API_KEY"] = get_key("GOOGLE_API_KEY") or ""
-os.environ["COINGECKO_API_KEY"] = get_key("COINGECKO_API_KEY") or ""
-os.environ["IPQS_API_KEY"] = get_key("IPQS_API_KEY") or ""
+os.environ["GOOGLE_KEY"] = get_key("GOOGLE_KEY") or ""
+os.environ["COINGECKO_KEY"] = get_key("COINGECKO_KEY") or ""
+os.environ["IP_QUALITY_KEY"] = get_key("IP_QUALITY_KEY") or ""
 
 # 4. Global Offline Check
-if not os.environ.get("GOOGLE_API_KEY"):
+if not os.environ.get("GOOGLE_KEY"):
     st.sidebar.error("🛡️ Sentinel Analyst Offline. Please provide an API key.")
 
 # Path setup 
@@ -41,12 +52,6 @@ sys.path.append(BASE_DIR)
 from src.ingestor import fetch_live_market_data
 from src.agent import run_agent_analysis
 
-# 1. Page Configuration
-st.set_page_config(
-    page_title="Sentinel-Graph AI",
-    page_icon="🛡️",
-    layout="wide"  
-)
 
 # 2. Enhanced Forensic CSS
 st.markdown("""

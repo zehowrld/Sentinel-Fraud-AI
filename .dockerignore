@@ -1,5 +1,12 @@
+pycache/
+*.py[cod]
+*$py.class
 .env
-.streamlit/secrets.toml
-__pycache__
-.git
-data/raw/
+.venv
+env/
+venv/
+.git/
+.github/
+.vscode/
+.devcontainer/
+*.ipynb_checkpoints/

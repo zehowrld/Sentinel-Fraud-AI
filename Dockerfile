@@ -6,11 +6,11 @@ ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends 
+RUN apt-get update && apt-get install -y --no-install-recommends\
 
-build-essential 
+build-essential\
 
-curl 
+curl\ 
 
 && rm -rf /var/lib/apt/lists/*
 

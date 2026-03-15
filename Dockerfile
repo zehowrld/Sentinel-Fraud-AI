@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. Application files
 
-COPY ..
+COPY . .
 
 # 6. Generate Forensic Results
 RUN python -m main

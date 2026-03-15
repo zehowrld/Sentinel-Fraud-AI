@@ -21,10 +21,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. Application files
 
-COPY app/ ./app/
-COPY src/ ./src/
+COPY ..
 
-# 6. Port and Healthcheck
+# 6. Generate Forensic Results
+RUN python -m main
+
+# 7. Port and Healthcheck
 
 EXPOSE 7860
 HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health || exit 1

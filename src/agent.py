@@ -13,10 +13,17 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 load_dotenv(override=True)
 
 # st.secrets is for Cloud; os.getenv is for Local .env
-api_key =  os.getenv("GOOGLE_KEY") or st.secrets.get("GOOGLE_KEY")
+api_key =  os.environ.get("GOOGLE_KEY")
 
 # 2. Add a safety check so the app doesn't crash with a cryptic error
 if not api_key:
+    try:
+        api_key = st.secrets.get("GOOGLE_KEY")
+    except Exception:
+        api_key = None
+
+if not api_key:
+    
     st.error("🔑 Google API Key not found. Please set it in Streamlit Secrets.")
     st.stop()
     

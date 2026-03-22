@@ -77,6 +77,7 @@ streamlit run app/dashboard.py
 ```
 
 ---
+If the live app is sleeping, please allow 30 seconds for the Docker container to rebuild.
 
 **Developed by [Hitesh Negi]** *Specializing in Graph Intelligence and Production-Grade AI Systems.*
 
